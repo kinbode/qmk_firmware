@@ -4,11 +4,16 @@
 #include QMK_KEYBOARD_H
 
 enum layers {
-    _BASE,
-    _SYMBOL,
-    _NAVIGATION,
-    _FUNCTION,
-    _ADJUST
+  _QWERTY,
+  _COLEMAKDH,
+  _SYMBOL,
+  _NAVIGATION,
+  _FUNCTION,
+  _ADJUST
+};
+
+enum custom_keycodes {
+  TOGLAY = SAFE_RANGE
 };
 
 #define ENT_SYM LT(_SYMBOL, KC_ENT)
@@ -18,13 +23,13 @@ enum layers {
 
 const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  
-/* BASE
+/* QWERTY
  * .-----------------------------------------.                    .-----------------------------------------.
  * | ESC  |  1   |  2   |  3   |  4   |  5   |                    |   6  |  7   |  8   |  9   |  0   |  `   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |  Q   |  W   |  E   |  R   |  T   |                    |   Y  |  U   |  I   |  O   |  P   |  \   |
+ * | Tab  |  Q   |  W   |  E   |  R   |  T   |                    |  Y   |  U   |  I   |  O   |  P   |  \   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |  A   |  S   |  D   |  F   |  G   |-------.    .-------|   H  |  J   |  K   |  L   |  ;   |  '   |
+ * |LCTRL |  A   |  S   |  D   |  F   |  G   |-------.    .-------|  H   |  J   |  K   |  L   |  ;   |  '   |
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
  * |LShift|  Z   |  X   |  C   |  V   |  B   |-------|    |-------|  N   |  M   |  ,   |  .   |  /   |RShift|
  * '-----------------------------------------/       /    \       \-----------------------------------------'
@@ -32,11 +37,33 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   |      |      |      |/       /        \       \ |      |      |      |
  *                   '------'------'------'-------'          '-------''------'------'------'
  */
-[_BASE] = LAYOUT(
+[_QWERTY] = LAYOUT(
   KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
   KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    XXXXXXX, XXXXXXX, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+                             KC_LGUI, KC_LALT, FUNC,    ENT_SYM, KC_SPC,  NAV,     KC_RALT, ADJUST
+),
+
+/* COLEMAK DH
+ * .-----------------------------------------.                    .-----------------------------------------.
+ * | ESC  |  1   |  2   |  3   |  4   |  5   |                    |   6  |  7   |  8   |  9   |  0   |  `   |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | Tab  |  Q   |  W   |  F   |  P   |  B   |                    |  J   |  L   |  U   |  Y   |  ;   |  \   |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |LCTRL |  A   |  R   |  S   |  T   |  G   |-------.    .-------|  M   |  N   |  E   |  I   |  O   |  '   |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |LShift|  Z   |  X   |  C   |  D   |  V   |-------|    |-------|  K   |  H   |  ,   |  .   |  /   |RShift|
+ * '-----------------------------------------/       /    \       \-----------------------------------------'
+ *                   | LGUI | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |ADJUST|
+ *                   |      |      |      |/       /        \       \ |      |      |      |
+ *                   '------'------'------'-------'          '-------''------'------'------'
+ */
+[_COLEMAKDH] = LAYOUT(
+  KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
+  KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                      KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS,
+  KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                      KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    XXXXXXX, XXXXXXX, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
                              KC_LGUI, KC_LALT, FUNC,    ENT_SYM, KC_SPC,  NAV,     KC_RALT, ADJUST
 ),
 
@@ -113,7 +140,7 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      | Sat- |Mode+ | Sat+ |      |                    |      |      | Vol+ |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      | Val- |RGBTog| Val+ |      |-------.    .-------|      |      | Mute |      |      |      |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |------+------+------+------+------+------|       |    |Layout |------+------+------+------+------+------|
  * |      |      | Hue- |Mode- | Hue+ |      |-------|    |-------|      |      | Vol- |      |      |      |
  * '-----------------------------------------/       /    \       \-----------------------------------------'
  *                   | LGUI | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |ADJUST|
@@ -124,10 +151,26 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,
   XXXXXXX, XXXXXXX, RGB_SAD, RGB_MOD, RGB_SAI, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_VOLU, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, RGB_VAD, RGB_TOG, RGB_VAI, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_MUTE, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, RGB_HUD, RGB_RMOD,RGB_HUI, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, KC_VOLD, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, XXXXXXX, RGB_HUD, RGB_RMOD,RGB_HUI, XXXXXXX, XXXXXXX, TOGLAY,  XXXXXXX, XXXXXXX, KC_VOLD, XXXXXXX, XXXXXXX, XXXXXXX,
                              _______, _______, _______, _______, _______, _______, _______, _______
 )
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case TOGLAY:
+      if (record->event.pressed) {
+        if (default_layer_state == _QWERTY) {
+          set_single_persistent_default_layer(_COLEMAKDH);
+        } else if (default_layer_state == _COLEMAKDH) {
+          set_single_persistent_default_layer(_QWERTY);
+        }
+      }
+      return false;
+    default:
+      return true;
+  }
+}
 
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
@@ -164,11 +207,25 @@ static char layer_title[] = {
   0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x1f, 0x00, 0x00, 0xff, 0x00, 0xff
 };
 
-static char layer_base[] = {
-  0x00, 0x00, 0xe0, 0x10, 0xe0, 0x00, 0xf0, 0x00,
-  0x00, 0x00, 0x38, 0x41, 0x39, 0x05, 0x78, 0x00,
-  0x80, 0x40, 0x4e, 0x81, 0x4f, 0x51, 0x8f, 0x00,
-  0x0f, 0x08, 0x08, 0x0f, 0x08, 0x08, 0x0f, 0x00
+// static char layer_base[] = {
+//   0x00, 0x00, 0xe0, 0x10, 0xe0, 0x00, 0xf0, 0x00,
+//   0x00, 0x00, 0x38, 0x41, 0x39, 0x05, 0x78, 0x00,
+//   0x80, 0x40, 0x4e, 0x81, 0x4f, 0x51, 0x8f, 0x00,
+//   0x0f, 0x08, 0x08, 0x0f, 0x08, 0x08, 0x0f, 0x00
+// };
+
+static char layer_qwerty[] = {
+  0x80, 0xc0, 0x92, 0x92, 0x92, 0x8e, 0x42, 0x1c,
+  0x00, 0x01, 0x8c, 0x52, 0x90, 0x10, 0xd0, 0x00,
+  0x00, 0x00, 0x89, 0x8a, 0xab, 0xaa, 0x79, 0x00,
+  0x3c, 0x42, 0x42, 0x42, 0x42, 0x44, 0x3a, 0x00
+};
+
+static char layer_colemak[] = {
+  0x04, 0x04, 0x64, 0x15, 0x76, 0x95, 0x75, 0x00,
+  0x00, 0x00, 0x34, 0xaa, 0x2a, 0x2a, 0xaa, 0x00,
+  0x10, 0x10, 0x93, 0x54, 0x57, 0x54, 0x93, 0x00,
+  0x70, 0x88, 0x81, 0x82, 0x82, 0x8a, 0x71, 0x00
 };
 
 static char layer_symbol[] = {
@@ -206,13 +263,13 @@ static char layer_overlay[] = {
   0x1f, 0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x7f, 0x1f
 };
 
-static void draw_layer(char* data, uint8_t layer_index) {
+static void draw_layer(char* data, uint8_t position, uint8_t layer_index) {
   uint8_t offset =
     LAYER_TOP_OFFSET + 
     LAYER_TITLE_SIZE + 
     LAYER_OFFSET +
-    LAYER_SIZE*layer_index +
-    LAYER_OFFSET*layer_index; 
+    LAYER_SIZE*position +
+    LAYER_OFFSET*position; 
 
   if (get_highest_layer(layer_state) == layer_index) {
     offset -= 2;
@@ -249,11 +306,13 @@ static void draw_layers(void) {
     oled_write_raw_byte(layer_title[3*LAYER_TITLE_SIZE + i], LAYER_TOP_OFFSET + i + 3*OLED_WIDTH);
   }
 
-  draw_layer(layer_base, 0);
-  draw_layer(layer_symbol, 1);
-  draw_layer(layer_navigation, 2);
-  draw_layer(layer_function, 3);
-  draw_layer(layer_adjust, 4);
+  char* layer_base = default_layer_state == _QWERTY ? layer_qwerty : layer_colemak;
+  
+  draw_layer(layer_base,       0, default_layer_state);
+  draw_layer(layer_symbol,     1, _SYMBOL);
+  draw_layer(layer_navigation, 2, _NAVIGATION);
+  draw_layer(layer_function,   3, _FUNCTION);
+  draw_layer(layer_adjust,     4, _ADJUST);
 }
 
 typedef struct {
@@ -270,23 +329,25 @@ typedef struct {
   animation_frame* frames[];
 } animation;
 
-#define FRAME_DURATION   100
-#define SPRITE_DIMENSION  16
-#define ANIMATION_NONE     0
-#define ANIMATION_IDLE1    1
-#define ANIMATION_IDLE2    2
-#define ANIMATION_CLEAN1   3
-#define ANIMATION_CLEAN2   4
-#define ANIMATION_PLAY     5
-#define ANIMATION_SLEEP    6
-#define ANIMATION_JUMP     7
-#define ANIMATION_SCARED   8
-#define ANIMATION_WALK     9
-#define ANIMATION_RUN     10
-#define DIRECTION_UP      -1
-#define DIRECTION_DOWN     1
-#define DIRECTION_LEFT    -1
-#define DIRECTION_RIGHT    1
+#define FRAME_DURATION     100
+#define SPRITE_DIMENSION    16
+#define ANIMATION_NONE       0
+#define ANIMATION_IDLE1      1
+#define ANIMATION_IDLE2      2
+#define ANIMATION_CLEAN1     3
+#define ANIMATION_CLEAN2     4
+#define ANIMATION_PLAY       5
+#define ANIMATION_SLEEP      6
+#define ANIMATION_JUMP       7
+#define ANIMATION_SCARED     8
+#define ANIMATION_WALK       9
+#define ANIMATION_RUN       10
+#define DIRECTION_UP        -1
+#define DIRECTION_DOWN       1
+#define DIRECTION_LEFT      -1
+#define DIRECTION_RIGHT      1
+#define ANIMATION_WALK_SPEED 1
+#define ANIMATION_RUN_SPEED  5
 
 static animation_frame animation_idle1_frame1 = {
   0, 0, 0, 0,
@@ -667,43 +728,217 @@ static animation animation_scared =  {
   }
 };
 
-// static animation animation_walk = {
-//   ANIMATION_WALK,
-//   8,
-//   {
-//     animation_walk_frame1,
-//     animation_walk_frame2,
-//     animation_walk_frame3,
-//     animation_walk_frame4,
-//     animation_walk_frame5,
-//     animation_walk_frame6,
-//     animation_walk_frame7,
-//     animation_walk_frame8
-//   }
-// };
+static animation_frame animation_walk_frame1 = {
+  0, 0, 0, ANIMATION_WALK_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0330, 0x62f0, 0xa210,
+    0xa248, 0xa208, 0xbe08, 0x4010, 0x4010, 0x5110, 0x5f50, 0x6db0
+  }
+};
+static animation_frame animation_walk_frame2 = {
+  -1, -1, 0, ANIMATION_WALK_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x006c, 0x00b4, 0x3108,
+    0x5124, 0xa104, 0x9f04, 0x6008, 0x2008, 0x24b0, 0x57d0, 0x6c30
+  }
+};
+static animation_frame animation_walk_frame3 = {
+  -3, -3, 0, ANIMATION_WALK_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x003e,
+    0x004b, 0x6049, 0xa041, 0xbfc1, 0x4802, 0x3906, 0x2491, 0x3ffe
+  }
+};
+static animation_frame animation_walk_frame4 = {
+  -1, -3, 0, ANIMATION_WALK_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001b, 0x002d, 0x0042,
+    0x0049, 0x3841, 0x47c1, 0x9802, 0xe802, 0x092c, 0x15f4, 0x1b0c,
+  }
+};
+static animation_frame animation_walk_frame5 = {
+  0, -3, 0, ANIMATION_WALK_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0036, 0x005e, 0x3042,
+    0x4849, 0xb441, 0xd7c1, 0x0802, 0x0802, 0x1001, 0x17ed, 0x1b33
+  }
+};
+static animation_frame animation_walk_frame6 = {
+  -1, -2, 0, ANIMATION_WALK_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0036, 0x005a, 0x6084,
+    0x9092, 0x6882, 0x2f82, 0x1004, 0x1004, 0x1442, 0x2fba, 0x30c4
+  }
+};
+static animation_frame animation_walk_frame7 = {
+  -2, -1, 0, ANIMATION_WALK_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x60f8, 0xa10c,
+    0x5124, 0x5104, 0x5f04, 0x2008, 0x600c, 0x8802, 0x7cfe, 0x0300
+  }
+};
+static animation_frame animation_walk_frame8 = {
+  -1, 0, 0, ANIMATION_WALK_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x00d8, 0x3168, 0x5210,
+    0x5248, 0x5208, 0xbe08, 0x4010, 0x4010, 0x5108, 0xbee8, 0xc310
+  }
+};
 
-// static animation animation_run = {
-//   ANIMATION_RUN,
-//   8,
-//   {
-//     animation_run_frame1,
-//     animation_run_frame2,
-//     animation_run_frame3,
-//     animation_run_frame4,
-//     animation_run_frame5,
-//     animation_run_frame6,
-//     animation_run_frame7,
-//     animation_run_frame8
-//   }
-// };
+static animation animation_walk = {
+  ANIMATION_WALK,
+  8,
+  {
+    &animation_walk_frame1,
+    &animation_walk_frame2,
+    &animation_walk_frame3,
+    &animation_walk_frame4,
+    &animation_walk_frame5,
+    &animation_walk_frame6,
+    &animation_walk_frame7,
+    &animation_walk_frame8
+  }
+};
+
+static animation_frame animation_run_frame1 = {
+  0, 0, 0, ANIMATION_RUN_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0330, 0x62f0, 0xa210,
+    0xa248, 0xa208, 0xbe08, 0x4010, 0x4010, 0x5110, 0x5f50, 0x6db0
+  }
+};
+static animation_frame animation_run_frame2 = {
+  -3, -1, 0, ANIMATION_RUN_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0330,
+    0x62f0, 0xa108, 0xa124, 0x5104, 0x5f04, 0x606e, 0x8012, 0xfffc
+  }
+};
+static animation_frame animation_run_frame3 = {
+  -4, -2, 0, ANIMATION_RUN_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0198,
+    0xc178, 0xa084, 0x5092, 0x2882, 0x3fb3, 0x400f, 0x703e, 0x0fc0
+  }
+};
+static animation_frame animation_run_frame4 = {
+  -3, -2, 0, ANIMATION_RUN_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0198,
+    0xc178, 0xa084, 0x5092, 0x2882, 0x1f82, 0x3037, 0x4009, 0x7ffe
+  }
+};
+static animation_frame animation_run_frame5 = {
+  0, -1, 0, ANIMATION_RUN_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0198, 0x6178,
+    0x9108, 0x6924, 0x2904, 0x3f04, 0x2008, 0x2888, 0x1750, 0x1fb0
+  }
+};
+static animation_frame animation_run_frame6 = {
+  -1, -1, 0, ANIMATION_RUN_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0330, 0x72f8,
+    0x8908, 0x6924, 0x3f04, 0x2004, 0x2418, 0x22b0, 0x19c8, 0x0730
+  }
+};
+static animation_frame animation_run_frame7 = {
+  -3, 0, 0, ANIMATION_RUN_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x3660,
+    0x55f0, 0x5210, 0xa248, 0xbe08, 0x4008, 0x4c30, 0x4370, 0x3ff0
+  }
+};
+static animation_frame animation_run_frame8 = {
+  -1, 0, 0, ANIMATION_RUN_SPEED,
+  {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x6660, 0xa5f0,
+    0xa210, 0xa248, 0xbe08, 0x4008, 0x4830, 0x4560, 0x3390, 0x0e60
+  }
+};
+
+static animation animation_run = {
+  ANIMATION_RUN,
+  8,
+  {
+    &animation_run_frame1,
+    &animation_run_frame2,
+    &animation_run_frame3,
+    &animation_run_frame4,
+    &animation_run_frame5,
+    &animation_run_frame6,
+    &animation_run_frame7,
+    &animation_run_frame8
+  }
+};
 
 uint32_t frame_timer = 0;
 uint32_t current_frame = 0;
 int16_t position_x = 56;
-int16_t position_y = 4;
+int16_t position_y = 8;
 int8_t direction_x = DIRECTION_RIGHT;
 int8_t direction_y = DIRECTION_UP;
 animation* active_animation = &animation_idle1;
+
+static void select_new_animation(void) {
+  int rand_val = (rand() % 1000) + 1;
+    
+  switch (active_animation->tag) {
+    case ANIMATION_IDLE1:
+      if (rand_val <= 700)      break;
+      else if (rand_val <= 850) active_animation = &animation_idle2;
+      else if (rand_val <= 910) active_animation = &animation_clean1;
+      else if (rand_val <= 950) active_animation = &animation_play;
+      else if (rand_val <= 980) active_animation = &animation_jump;
+      else if (rand_val <= 990) active_animation = &animation_sleep;
+      else if (rand_val <= 995) active_animation = &animation_scared;
+      else if (rand_val <= 998) active_animation = &animation_walk;
+      else                      active_animation = &animation_run;
+      break;
+    case ANIMATION_IDLE2:
+      if (rand_val <= 600)      break;
+      else                      active_animation = &animation_idle1;
+      break;
+    case ANIMATION_CLEAN1:
+      if (rand_val <= 700)      break;
+      else if (rand_val <= 950) active_animation = &animation_clean2;
+      else                      active_animation = &animation_idle1;
+      break;
+    case ANIMATION_CLEAN2:
+      if (rand_val <= 700)      break;
+      else                      active_animation = &animation_clean1;
+      break;
+    case ANIMATION_PLAY:
+      if (rand_val <= 850)      break;
+      else                      active_animation = &animation_idle1;
+      break;
+    case ANIMATION_SLEEP:
+      if (rand_val <= 980)      break;
+      else                      active_animation = &animation_idle1;
+      break;
+    case ANIMATION_JUMP:
+      if (rand_val <= 750)      active_animation = &animation_idle1;
+      else                      active_animation = &animation_run;
+      break;
+    case ANIMATION_SCARED:
+      if (rand_val <= 500)      break;
+      else if (rand_val <= 750) active_animation = &animation_idle1;
+      else if (rand_val <= 900) active_animation = &animation_run;
+      else                      active_animation = &animation_play;
+      break;
+    case ANIMATION_WALK:
+      if (rand_val <= 850)      break;
+      if (rand_val <= 900)      active_animation = &animation_run;
+      else                      active_animation = &animation_idle1;
+      break;
+    case ANIMATION_RUN:
+      if (rand_val <= 900)      break;
+      if (rand_val <= 930)      active_animation = &animation_walk;
+      if (rand_val <= 970)      active_animation = &animation_jump;
+      else                      active_animation = &animation_idle1;
+      break;
+  }
+}
 
 static void draw_animation(void) {
   if (timer_elapsed32(frame_timer) < FRAME_DURATION) return;
@@ -711,59 +946,13 @@ static void draw_animation(void) {
   frame_timer = timer_read32();
 
   if (current_frame >= active_animation->frame_count) {
-    current_frame = 0; 
-    int rand_val = (rand() % 1000) + 1;
-    
-    switch (active_animation->tag) {
-      case ANIMATION_IDLE1:
-        if (rand_val <= 700)      break;
-        else if (rand_val <= 850) active_animation = &animation_idle2;
-        else if (rand_val <= 910) active_animation = &animation_clean1;
-        else if (rand_val <= 950) active_animation = &animation_play;
-        else if (rand_val <= 980) active_animation = &animation_jump;
-        else if (rand_val <= 990) active_animation = &animation_sleep;
-        else if (rand_val <= 995) active_animation = &animation_scared;
-        // else if (rand_val <= 999) active_animation = &animation_walk;
-        // else                      active_animation = &animation_run;
-        else                      active_animation = &animation_idle2;
-        break;
-      case ANIMATION_IDLE2:
-        if (rand_val <= 600)      break;
-        else                      active_animation = &animation_idle1;
-        break;
-      case ANIMATION_CLEAN1:
-        if (rand_val <= 700)      break;
-        else if (rand_val <= 950) active_animation = &animation_clean2;
-        else                      active_animation = &animation_idle1;
-        break;
-      case ANIMATION_CLEAN2:
-        if (rand_val <= 700)      break;
-        else                      active_animation = &animation_clean1;
-        break;
-      case ANIMATION_PLAY:
-        if (rand_val <= 850)      break;
-        else                      active_animation = &animation_idle1;
-        break;
-      case ANIMATION_SLEEP:
-        if (rand_val <= 980)      break;
-        else                      active_animation = &animation_idle1;
-        break;
-      case ANIMATION_JUMP:
-        active_animation = &animation_idle1;
-        // if (rand_val <= 750)      active_animation = &animation_idle1;
-        // else                      active_animation = &animation_run;
-        break;
-      case ANIMATION_SCARED:
-        if (rand_val <= 500)      break;
-        else if (rand_val <= 750) active_animation = &animation_idle1;
-        else if (rand_val <= 900) active_animation = &animation_run;
-        else                      active_animation = &animation_play;
-        break;
-      // case ANIMATION_WALK:
-      //   break;
-      // case ANIMATION_RUN:
-      //   break;
-    }
+    current_frame = 0;
+
+    if (position_x >= 0 && 
+        position_x <= OLED_WIDTH - SPRITE_DIMENSION &&
+        position_y >= 0 && 
+        position_y <= OLED_HEIGHT - SPRITE_DIMENSION)
+        select_new_animation(); 
   }
   
   oled_clear();
@@ -796,12 +985,14 @@ static void draw_animation(void) {
     if (buffer_offset < 0) continue; 
     if (buffer_offset >= OLED_WIDTH - 1) break;
     
-    uint8_t frame_data_index;
+    uint8_t frame_data_index = 0;
     switch (direction_x) {
       case DIRECTION_RIGHT:
         frame_data_index = i;
+        break;
       case DIRECTION_LEFT:
         frame_data_index = SPRITE_DIMENSION - i;
+        break;
     }
 
     uint16_t sprite_line = active_animation->frames[current_frame]->frame_data[frame_data_index];
@@ -840,9 +1031,9 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 
 bool oled_task_user(void) {
   if (is_keyboard_master()) {
-    draw_layers();
-  } else {
     draw_animation();
+  } else {
+    draw_layers();
   }
 
   return false;

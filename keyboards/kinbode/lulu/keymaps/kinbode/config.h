@@ -1,1 +1,2 @@
-#define MASTER_RIGHT
+#define MASTER_LEFT
+#define SPLIT_LAYER_STATE_ENABLE
