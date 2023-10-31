@@ -160,9 +160,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case TOGLAY:
       if (record->event.pressed) {
-        if (default_layer_state == _QWERTY) {
+        if (get_highest_layer(default_layer_state) == _QWERTY) {
           set_single_persistent_default_layer(_COLEMAKDH);
-        } else if (default_layer_state == _COLEMAKDH) {
+        } else if (get_highest_layer(default_layer_state) == _COLEMAKDH) {
           set_single_persistent_default_layer(_QWERTY);
         }
       }
@@ -271,7 +271,7 @@ static void draw_layer(char* data, uint8_t position, uint8_t layer_index) {
     LAYER_SIZE*position +
     LAYER_OFFSET*position; 
 
-  if (get_highest_layer(layer_state) == layer_index) {
+  if (get_highest_layer(layer_state | default_layer_state) == layer_index) {
     offset -= 2;
     for (uint8_t i = 0; i < LAYER_OVERLAY_SIZE; i++) {
       if (i < 2 || i > 9) {
@@ -306,9 +306,11 @@ static void draw_layers(void) {
     oled_write_raw_byte(layer_title[3*LAYER_TITLE_SIZE + i], LAYER_TOP_OFFSET + i + 3*OLED_WIDTH);
   }
 
-  char* layer_base = default_layer_state == _QWERTY ? layer_qwerty : layer_colemak;
-  
-  draw_layer(layer_base,       0, default_layer_state);
+  if (get_highest_layer(default_layer_state) == _QWERTY) {
+    draw_layer(layer_qwerty,   0, _QWERTY);
+  } else if (get_highest_layer(default_layer_state) == _COLEMAKDH) {
+    draw_layer(layer_colemak,  0, _COLEMAKDH);
+  }
   draw_layer(layer_symbol,     1, _SYMBOL);
   draw_layer(layer_navigation, 2, _NAVIGATION);
   draw_layer(layer_function,   3, _FUNCTION);
