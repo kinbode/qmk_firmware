@@ -19,7 +19,7 @@ enum custom_keycodes {
 #define ENT_SYM LT(_SYMBOL, KC_ENT)
 #define NAV     MO(_NAVIGATION)
 #define FUNC    MO(_FUNCTION)
-#define ADJUST  MO(_ADJUST)
+#define ADJUST  TG(_ADJUST)
 
 const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  
@@ -29,20 +29,20 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | Tab  |  Q   |  W   |  E   |  R   |  T   |                    |  Y   |  U   |  I   |  O   |  P   |  \   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |  A   |  S   |  D   |  F   |  G   |-------.    .-------|  H   |  J   |  K   |  L   |  ;   |  '   |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * | LGUI |  A   |  S   |  D   |  F   |  G   |-------.    .-------|  H   |  J   |  K   |  L   |  ;   |  '   |
+ * |------+------+------+------+------+------|ADJUST |    |       |------+------+------+------+------+------|
  * |LShift|  Z   |  X   |  C   |  V   |  B   |-------|    |-------|  N   |  M   |  ,   |  .   |  /   |RShift|
  * '-----------------------------------------/       /    \       \-----------------------------------------'
- *                   | LGUI | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |ADJUST|
+ *                   |LCTRL | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |RCTRL |
  *                   |      |      |      |/       /        \       \ |      |      |      |
  *                   '------'------'------'-------'          '-------''------'------'------'
  */
 [_QWERTY] = LAYOUT(
   KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
-  KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    XXXXXXX, XXXXXXX, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                             KC_LGUI, KC_LALT, FUNC,    ENT_SYM, KC_SPC,  NAV,     KC_RALT, ADJUST
+  KC_LGUI, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    ADJUST,  XXXXXXX, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+                             KC_LCTL, KC_LALT, FUNC,    ENT_SYM, KC_SPC,  NAV,     KC_RALT, KC_RCTL
 ),
 
 /* COLEMAK DH
@@ -51,20 +51,20 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | Tab  |  Q   |  W   |  F   |  P   |  B   |                    |  J   |  L   |  U   |  Y   |  ;   |  \   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |  A   |  R   |  S   |  T   |  G   |-------.    .-------|  M   |  N   |  E   |  I   |  O   |  '   |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * | LGUI |  A   |  R   |  S   |  T   |  G   |-------.    .-------|  M   |  N   |  E   |  I   |  O   |  '   |
+ * |------+------+------+------+------+------|ADJUST |    |       |------+------+------+------+------+------|
  * |LShift|  Z   |  X   |  C   |  D   |  V   |-------|    |-------|  K   |  H   |  ,   |  .   |  /   |RShift|
  * '-----------------------------------------/       /    \       \-----------------------------------------'
- *                   | LGUI | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |ADJUST|
+ *                   |LCTRL | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |RCTRL |
  *                   |      |      |      |/       /        \       \ |      |      |      |
  *                   '------'------'------'-------'          '-------''------'------'------'
  */
 [_COLEMAKDH] = LAYOUT(
   KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                      KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS,
-  KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                      KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    XXXXXXX, XXXXXXX, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                             KC_LGUI, KC_LALT, FUNC,    ENT_SYM, KC_SPC,  NAV,     KC_RALT, ADJUST
+  KC_LGUI, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                      KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    ADJUST,  XXXXXXX, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+                             KC_LGUI, KC_LALT, FUNC,    ENT_SYM, KC_SPC,  NAV,     KC_RALT, KC_RCTL
 ),
 
 /* SYMBOL
@@ -73,11 +73,11 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |  *   |  &   |      |                    |      |  [   |  ]   |  !   |  ?   |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |  $   |  #   |  @   |  !   |  _   |-------.    .-------|  =   |  {   |  }   |  (   |  )   |      |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * | LGUI |  $   |  #   |  @   |  !   |  _   |-------.    .-------|  =   |  {   |  }   |  (   |  )   |      |
+ * |------+------+------+------+------+------|ADJUST |    |       |------+------+------+------+------+------|
  * |LShift|      |      |  ^   |  %   |      |-------|    |-------|      |  -   |  +   |      |      |RShift|
  * '-----------------------------------------/       /    \       \-----------------------------------------'
- *                   | LGUI | LAlt | FUNC | / Enter /      \Backspc\  | NAV  | RAlt |ADJUST|
+ *                   |LCTRL | LAlt | FUNC | / Enter /      \Backspc\  | NAV  | RAlt |RCTRL |
  *                   |      |      |      |/       /        \       \ |      |      |      |
  *                   '------'------'------'-------'          '-------''------'------'------'
  */
@@ -95,11 +95,11 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |                    | Ins  | Home |  Up  | End  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |      |      |      |      |      |-------.    .-------| Del  | Left | Down |Right |      |      |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * | LGUI |      |      |      |      |      |-------.    .-------| Del  | Left | Down |Right |      |      |
+ * |------+------+------+------+------+------|ADJUST |    |       |------+------+------+------+------+------|
  * |LShift|      |      |      |      |      |-------|    |-------|      | PgUp |      | PgDn |      |RShift|
  * '-----------------------------------------/       /    \       \-----------------------------------------'
- *                   | LGUI | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |ADJUST|
+ *                   |LCTRL | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |RCTRL |
  *                   |      |      |      |/       /        \       \ |      |      |      |
  *                   '------'------'------'-------'          '-------''------'------'------'
  */
@@ -117,19 +117,19 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |  F1  |  F2  |  F3  |  F4  |      |                    |      |  7   |  8   |  9   |  -   |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |  F5  |  F6  |  F7  |  F8  |      |-------.    .-------|      |  4   |  5   |  6   |  +   |      |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * | LGUI |  F5  |  F6  |  F7  |  F8  |      |-------.    .-------|      |  4   |  5   |  6   |  +   |      |
+ * |------+------+------+------+------+------|ADJUST |    |       |------+------+------+------+------+------|
  * |LShift|  F9  | F10  | F11  | F12  |      |-------|    |-------|      |  1   |  2   |  3   |  .   |RShift|
  * '-----------------------------------------/       /    \       \-----------------------------------------'
- *                   | LGUI | LAlt | FUNC | / Enter /      \   0   \  | NAV  | RAlt |ADJUST|
+ *                   |LCTRL | LAlt | FUNC | / Enter /      \   0   \  | NAV  | RAlt |RCTRL |
  *                   |      |      |      |/       /        \       \ |      |      |      |
  *                   '------'------'------'-------'          '-------''------'------'------'
  */
  [_FUNCTION] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, KC_NUM,  KC_PSLS, KC_PAST, XXXXXXX, XXXXXXX,
-  XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   XXXXXXX,                   XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_PMNS,  XXXXXXX,
-  _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   XXXXXXX,                   XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PPLS,  XXXXXXX,
-  _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, _______, _______, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   KC_PDOT,  _______,
+  XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   XXXXXXX,                   XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_PMNS, XXXXXXX,
+  _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   XXXXXXX,                   XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, XXXXXXX,
+  _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, _______, _______, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   KC_PDOT, _______,
                              _______, _______, _______, _______, KC_P0,   _______, _______, _______
 ),
 
@@ -140,10 +140,10 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      | Sat- |Mode+ | Sat+ |      |                    |      |      | Vol+ |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      | Val- |RGBTog| Val+ |      |-------.    .-------|      |      | Mute |      |      |      |
- * |------+------+------+------+------+------|       |    |Layout |------+------+------+------+------+------|
+ * |------+------+------+------+------+------|ADJUST |    |Layout |------+------+------+------+------+------|
  * |      |      | Hue- |Mode- | Hue+ |      |-------|    |-------|      |      | Vol- |      |      |      |
  * '-----------------------------------------/       /    \       \-----------------------------------------'
- *                   | LGUI | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |ADJUST|
+ *                   |LCTRL | LAlt | FUNC | / Enter /      \ Space \  | NAV  | RAlt |RCTRL |
  *                   |      |      |      |/       /        \       \ |      |      |      |
  *                   '------'------'------'-------'          '-------''------'------'------'
  */
@@ -151,7 +151,7 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,
   XXXXXXX, XXXXXXX, RGB_SAD, RGB_MOD, RGB_SAI, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_VOLU, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, RGB_VAD, RGB_TOG, RGB_VAI, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_MUTE, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, RGB_HUD, RGB_RMOD,RGB_HUI, XXXXXXX, XXXXXXX, TOGLAY,  XXXXXXX, XXXXXXX, KC_VOLD, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, XXXXXXX, RGB_HUD, RGB_RMOD,RGB_HUI, XXXXXXX, _______, TOGLAY,  XXXXXXX, XXXXXXX, KC_VOLD, XXXXXXX, XXXXXXX, XXXXXXX,
                              _______, _______, _______, _______, _______, _______, _______, _______
 )
 };
@@ -206,13 +206,6 @@ static char layer_title[] = {
   0x00, 0x00, 0x39, 0x05, 0x3d, 0x44, 0x3c, 0x01, 0x00, 0xff, 0x00, 0xff,
   0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x1f, 0x00, 0x00, 0xff, 0x00, 0xff
 };
-
-// static char layer_base[] = {
-//   0x00, 0x00, 0xe0, 0x10, 0xe0, 0x00, 0xf0, 0x00,
-//   0x00, 0x00, 0x38, 0x41, 0x39, 0x05, 0x78, 0x00,
-//   0x80, 0x40, 0x4e, 0x81, 0x4f, 0x51, 0x8f, 0x00,
-//   0x0f, 0x08, 0x08, 0x0f, 0x08, 0x08, 0x0f, 0x00
-// };
 
 static char layer_qwerty[] = {
   0x80, 0xc0, 0x92, 0x92, 0x92, 0x8e, 0x42, 0x1c,
